@@ -17,6 +17,8 @@ spec:
         image: athirak1234/python_flask:14
         ports:
         - containerPort: 5000
+      imagePullSecrets:
+      - name: regcreds
 
 ---
 
