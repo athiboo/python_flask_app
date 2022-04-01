@@ -27,6 +27,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: python-flask-app-service
+  namespace: DEPLOYMENTENVIRONMENT
   labels:
     run: python-flask-app-label
 spec:
