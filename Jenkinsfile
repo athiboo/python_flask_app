@@ -27,6 +27,18 @@ pipeline {
                 sh 'docker run --user $(id -u):$(id -g) --rm -v "$(pwd):/proj" dxa4481/trufflehog file:///proj --json | tee trufflehog-output.json'
             }
         } 
+        stage('Dockerlint') {
+                    steps {
+                        echo 'Dockerlint Scaning'
+                        sh 'docker run --user $(id -u):$(id -g) -it --rm -v "$PWD/Dockerfile":/Dockerfile:ro redcoolbeans/dockerlint | tee dockerlint-output.json'
+                    }
+                }
+                stage('Hadolint') {
+                    steps {
+                        echo 'Hadolint Scaning'
+                        sh 'docker run --user $(id -u):$(id -g) -it --rm -v "$PWD/Dockerfile":/Dockerfile:ro hadolint/hadolint hadolint Dockerfile | tee hadolint-output.json'
+                    }
+                }
         stage('Building our image') { 
             steps { 
                 script { 
