@@ -11,6 +11,11 @@ pipeline {
                 git branch:'main', url: 'https://github.com/athiboo/python_flask_app.git' 
             }
         }
+        stage('flake8') { 
+            steps { 
+                sh 'docker run --user $(id -u):$(id -g) --rm -v $(pwd):/src alpine/flake8:3.5.0 app.py'
+            }
+        } 
         stage('Bandit') { 
             steps { 
                 sh 'docker run --user $(id -u):$(id -g) -v $(pwd):/src --rm secfigo/bandit bandit -r /src -f json -o /src/bandit-output.json | exit 0'
